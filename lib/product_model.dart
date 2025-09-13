@@ -1,61 +1,69 @@
 class ProductModel {
-  int? id;
-  String? title;
-  num? price;
-  String? description;
-  String? category;
-  String? image;
-  Rating? rating;
+  final int id;
+  final String title;
+  final num price;
+  final String description;
+  final String category;
+  final String image;
+  final Rating? rating;
 
-  ProductModel(
-      {this.id,
-        this.title,
-        this.price,
-        this.description,
-        this.category,
-        this.image,
-        this.rating});
+  const ProductModel({
+    required this.id,
+    required this.title,
+    required this.price,
+    required this.description,
+    required this.category,
+    required this.image,
+    this.rating,
+  });
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    price = json['price'];
-    description = json['description'];
-    category = json['category'];
-    image = json['image'];
-    rating = json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+  /// JSON → Object
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      id: json['id'],
+      title: json['title'],
+      price: json['price'],
+      description: json['description'],
+      category: json['category'],
+      image: json['image'],
+      rating: json['rating'] != null ? Rating.fromJson(json['rating']) : null,
+    );
   }
 
+  /// Object → JSON
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['price'] = this.price;
-    data['description'] = this.description;
-    data['category'] = this.category;
-    data['image'] = this.image;
-    if (this.rating != null) {
-      data['rating'] = this.rating!.toJson();
-    }
-    return data;
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'description': description,
+      'category': category,
+      'image': image,
+      if (rating != null) 'rating': rating!.toJson(),
+    };
   }
 }
 
 class Rating {
-  num? rate;
-  num? count;
+  final num rate;
+  final num count;
 
-  Rating({this.rate, this.count});
+  const Rating({
+    required this.rate,
+    required this.count,
+  });
 
-  Rating.fromJson(Map<String, dynamic> json) {
-    rate = json['rate'];
-    count = json['count'];
+  factory Rating.fromJson(Map<String, dynamic> json) {
+    return Rating(
+      rate: json['rate'],
+      count: json['count'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rate'] = this.rate;
-    data['count'] = this.count;
-    return data;
+    return {
+      'rate': rate,
+      'count': count,
+    };
   }
 }
