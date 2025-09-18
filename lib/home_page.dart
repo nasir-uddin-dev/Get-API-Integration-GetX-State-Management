@@ -1,74 +1,99 @@
+import 'package:api_getx_state_management/categories_shimmer.dart';
+import 'package:api_getx_state_management/home_controller.dart';
+import 'package:api_getx_state_management/shimmer_effect.dart';
 import 'package:flutter/material.dart';
-import 'package:api_getx_state_management/product_model.dart';
+import 'package:get/get.dart';
 
-class ProductCard extends StatelessWidget {
-  final ProductModel product;
+import 'home_page.dart';
+import 'product_card.dart'; // নতুন ফাইল ইমপোর্ট
 
-  const ProductCard({super.key, required this.product});
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
+
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shadowColor: Colors.grey.shade600,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(30),
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(10),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Online Shop",
+          style: Theme.of(context).textTheme.titleLarge,
         ),
+        centerTitle: true,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// Product Image
-            Center(
-              child: Image.network(
-                product.image ?? "",
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                const Icon(Icons.image, size: 50),
-              ),
+      body: Column(
+        children: [
+          /// Categories Section
+          SizedBox(
+            height: 40,
+            child: GetBuilder<HomeController>(
+              builder: (_) {
+                if (homeController.isCategoriesLoading) {
+                  return const CategoriesShimmer();
+                }
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: homeController.categories.length,
+                  itemBuilder: (context, index) {
+                    final category = homeController.categories[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: GestureDetector(
+                        onTap: () =>
+                            homeController.getProductsByCategory(category),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.deepOrange,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Center(
+                            child: Text(
+                              category.toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
-            const SizedBox(height: 6),
+          ),
 
-            /// Product Title
-            Text(
-              product.title ?? "No Title",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyLarge,
+          const SizedBox(height: 10),
+
+          /// Products Section
+          Expanded(
+            child: GetBuilder<HomeController>(
+              builder: (_) {
+                if (homeController.isLoading) {
+                  return const ShimmerEffect();
+                }
+
+                return GridView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  ),
+                  itemCount: homeController.products.length,
+                  itemBuilder: (context, index) {
+                    final product = homeController.products[index];
+                    return ProductCard(product: product); // আলাদা Widget ব্যবহার
+                  },
+                );
+              },
             ),
-
-            /// Product Description
-            Text(
-              product.description ?? "",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 12),
-            ),
-
-            const Spacer(),
-
-            /// Price & Rating
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Tk ${product.price ?? 0}"),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.orange, size: 18),
-                    Text("${product.rating?.rate ?? 0}"),
-                  ],
-                ),
-              ],
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

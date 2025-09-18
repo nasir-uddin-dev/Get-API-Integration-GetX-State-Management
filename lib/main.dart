@@ -1,7 +1,8 @@
 
-import 'package:api_getx_state_management/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'home_page.dart';
 
 void main() {
   runApp(const MyApp());
