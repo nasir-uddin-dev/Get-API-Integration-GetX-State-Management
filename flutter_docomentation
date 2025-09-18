@@ -1,0 +1,16 @@
+Getting Started with Flutter? Master These Key Terminologies First!
+
+When I started with Flutter, the toughest part wasn’t coding – it was understanding the terminologies.
+ Here are some basics every Flutter dev should know:
+
+📌 Widget – The building block of everything in Flutter (UI + Logic).
+ 📌 StatelessWidget – A widget that does not change once built.
+ 📌 StatefulWidget – A widget that can change dynamically (with setState or state management).
+ 📌 BuildContext – A reference to where your widget lives in the widget tree 🌳.
+ 📌 Hot Reload vs Hot Restart – Speed up your development cycle ⚡.
+ 📌 MaterialApp / CupertinoApp – App-level widgets for Android & iOS design.
+ 📌 Scaffold – Provides basic UI structure (AppBar, Drawer, FAB, etc).
+ 📌 Navigator – Handles screen routing & navigation 🧭.
+ 📌 State Management – How your app handles & updates data (Provider, Riverpod, BLoC, GetX).
+
+💡 Mastering these terms makes Flutter much easier to learn and build with.

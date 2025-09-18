@@ -15,7 +15,6 @@ class HomeController extends GetxController {
 
   bool isCategoriesLoading = false;
   bool isLoading = false;
-
   bool isProductsByCategoryLoading = false;
 
   @override
@@ -23,8 +22,6 @@ class HomeController extends GetxController {
     homeService = HomeService();
     getCategories();
     getProducts();
-
-    // TODO: implement onInit
     super.onInit();
   }
 
@@ -34,7 +31,6 @@ class HomeController extends GetxController {
       http.Response response = await homeService.getProducts();
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-
         for (int i = 0; i < data.length; i++) {
           products.add(ProductModel.fromJson(data[i]));
         }
@@ -54,12 +50,10 @@ class HomeController extends GetxController {
       http.Response response =
           await homeService.getProductsByCategory(category);
       var data = jsonDecode(response.body);
-
       for (int i = 0; i < data.length; i++) {
         productsByCategory.add(ProductModel.fromJson(data[i]));
       }
-      
-    print(productsByCategory);
+      print(productsByCategory);
       isProductsByCategoryLoading = false;
       update();
     } catch (e) {
