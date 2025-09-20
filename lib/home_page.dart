@@ -1,6 +1,8 @@
+import 'package:api_getx_state_management/action_page.dart';
 import 'package:api_getx_state_management/categories_shimmer.dart';
 import 'package:api_getx_state_management/home_controller.dart';
 import 'package:api_getx_state_management/product_shimmer.dart';
+import 'package:api_getx_state_management/products_view_by_category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +22,20 @@ class HomePage extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         centerTitle: true,
+        actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: InkWell(
+            onTap: (){
+              Get.to(ActionPage());
+            },
+            child: CircleAvatar(
+              radius: 14,
+              backgroundColor: Colors.deepOrangeAccent,
+              child: Icon(Icons.add, color: Colors.white,),),
+          ),
+        )
+        ],
       ),
       body: Column(
         children: [
@@ -39,8 +55,11 @@ class HomePage extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: GestureDetector(
-                        onTap: () =>
-                            homeController.getProductsByCategory(category),
+                        onTap: () {
+                          homeController.getProductsByCategory(
+                              homeController.categories[index]);
+                          Get.to(ProductsViewByCategory(homeController.categories[index].toUpperCase()));
+                        },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           decoration: BoxDecoration(
@@ -49,7 +68,7 @@ class HomePage extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              category.toUpperCase(),
+                              homeController.categories[index].toUpperCase(),
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,

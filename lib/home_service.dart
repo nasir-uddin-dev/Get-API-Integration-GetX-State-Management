@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HomeService {
@@ -17,6 +18,13 @@ class HomeService {
   Future<http.Response> getProductsByCategory(String category) async {
     String url = "https://fakestoreapi.com/products/category/${category}";
     http.Response response = await http.get(Uri.parse(url));
+    return response;
+  }
+
+  Future<http.Response> postProduct(Map<String, dynamic> product) async {
+    String url = "https://fakestoreapi.com/products";
+    http.Response response =
+        await http.post(Uri.parse(url), body: jsonEncode(product));
     return response;
   }
 }

@@ -16,6 +16,7 @@ class HomeController extends GetxController {
   bool isCategoriesLoading = false;
   bool isLoading = false;
   bool isProductsByCategoryLoading = false;
+  bool isProductPostLoading = false;
 
   @override
   void onInit() {
@@ -23,6 +24,24 @@ class HomeController extends GetxController {
     getCategories();
     getProducts();
     super.onInit();
+  }
+
+  void postProduct(Map<String, dynamic> product) async {
+    try {
+      isProductPostLoading = true;
+      update();
+
+      http.Response response = await homeService.postProduct(product);
+      if (response.statusCode == 200) {
+        print(response.body);
+        isProductPostLoading =false;
+        update();
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void getProducts() async {
