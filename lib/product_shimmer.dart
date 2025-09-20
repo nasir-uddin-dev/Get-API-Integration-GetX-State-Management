@@ -6,141 +6,45 @@ class ShimmerEffect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double itemHeight = 200; // আপনার product card এর height
+
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-            children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+          children: [
+            shimmerRow(itemHeight),
+            const SizedBox(height: 20),
+            shimmerRow(itemHeight),
+            const SizedBox(height: 20),
+            shimmerRow(itemHeight),
+            const SizedBox(height: 20),
+            shimmerRow(itemHeight),
+          ],
+        ),
+      ),
+    );
+  }
 
-              children: [
-                Shimmer.fromColors(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-                    height: 150,
-                    width: 150,
-                  ),
-                  baseColor: Colors.grey[200]!,
-                  highlightColor: Colors.grey[50]!,
-                ),
-                SizedBox(
-                  width: 40,
-                ),
-                Shimmer.fromColors(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
-                    height: 150,
-                    width: 150,
-                  ),
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Shimmer.fromColors(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  height: 150,
-                  width: 150,
-                ),
-                baseColor: Colors.grey[200]!,
-                highlightColor: Colors.grey[50]!,
-              ),
-              SizedBox(
-                width: 40,
-              ),
-              Shimmer.fromColors(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  height: 150,
-                  width: 150,
-                ),
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-              ),
-            ],
-          ),
-          SizedBox(height: 10,),
-          Row(
-            children: [
-              Shimmer.fromColors(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white
-                  ),
-                  height: 150,
-                  width: 150,
-                ),
-                baseColor: Colors.grey[200]!,
-                highlightColor: Colors.grey[50]!,
-              ),
-      
-              SizedBox(width: 40,),
-              Shimmer.fromColors(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white
-                  ),
-                  height: 150,
-                  width: 150,
-                ),
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-              ),
-      
-            ],
-          ),
-          SizedBox(height: 10,),
-          Row(
-            children: [
-              Shimmer.fromColors(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white
-                  ),
-                  height: 150,
-                  width: 150,
-                ),
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-              ),
-      
-              SizedBox(width: 40,),
-              Shimmer.fromColors(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white
-                  ),
-                  height: 150,
-                  width: 150,
-                ),
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-              ),
-      
-            ],
-          ),
-        ]
+  Widget shimmerRow(double height) {
+    return Row(
+      children: [
+        Expanded(child: shimmerBox(height)),
+        const SizedBox(width: 10),
+        Expanded(child: shimmerBox(height)),
+      ],
+    );
+  }
+
+  Widget shimmerBox(double height) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[200]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
         ),
       ),
     );
