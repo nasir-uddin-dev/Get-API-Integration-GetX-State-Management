@@ -1,10 +1,9 @@
 import 'package:api_getx_state_management/categories_shimmer.dart';
 import 'package:api_getx_state_management/home_controller.dart';
-import 'package:api_getx_state_management/shimmer_effect.dart';
+import 'package:api_getx_state_management/product_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'home_page.dart';
 import 'product_card.dart'; // নতুন ফাইল ইমপোর্ট
 
 class HomePage extends StatelessWidget {
